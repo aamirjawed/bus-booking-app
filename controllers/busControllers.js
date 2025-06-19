@@ -1,5 +1,6 @@
 const db = require('../utils/db-connection')
 const {User, Bus} = require('../models/busModel');
+const Booking = require('../models/bookingModel');
 
 
 
@@ -78,4 +79,15 @@ const availableSeats = async (req, res) => {
     }
 }
 
-module.exports = {addUsers, getUsers, addBus, availableSeats}
+const bookSeat = async (req,res) => {
+    try {
+        const {seat_no} = req.boyd;
+        const booking = Booking.create({seat_no:seat_no})
+
+        res.status(201).json(booking)
+    } catch (error) {
+        res.status(500).json({'error':error.message})
+    }
+}
+
+module.exports = {addUsers, getUsers, addBus, availableSeats, bookSeat}
